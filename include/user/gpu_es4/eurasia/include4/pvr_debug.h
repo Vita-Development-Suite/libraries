@@ -29,7 +29,6 @@
 
 #include "img_types.h"
 
-
 #if defined (__cplusplus)
 extern "C" {
 #endif

@@ -26,7 +26,7 @@
 #ifndef _IMG_LIST_H_
 #define _IMG_LIST_H_
 
-#include <img_defs.h>
+#include "img_defs.h"
 
 /* classic doubly-link circular list */
 typedef struct PVRSRV_LIST_HEAD {

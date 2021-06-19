@@ -791,21 +791,21 @@ typedef struct _USEGEN_INT_REG_LOAD_PROG_
 /******************************************************************************
  * Calculation Functions
  ******************************************************************************/
-IMG_UINT32 USEGenCalculateStateSize (IMG_UINT32 ui32NumWrites);
+IMG_INTERNAL IMG_UINT32 USEGenCalculateStateSize (IMG_UINT32 ui32NumWrites);
 
 #if defined(SGX_FEATURE_VCB)
 IMG_UINT32 USEGenCalculateVtxDMAPreCullSize (IMG_UINT32 ui32VtxSize);
 #endif
 
-IMG_UINT32 USEGenCalculateIntRegStoreSize(IMG_BOOL bGeometryShader,
+IMG_INTERNAL IMG_UINT32 USEGenCalculateIntRegStoreSize(IMG_BOOL bGeometryShader,
 										  IMG_BOOL bNonCGInstancing,
 										  IMG_UINT32 ui32Elements);
-IMG_UINT32 USEGenCalculateIntRegLoadSize(IMG_UINT32 ui32IntRegs);
+IMG_INTERNAL IMG_UINT32 USEGenCalculateIntRegLoadSize(IMG_UINT32 ui32IntRegs);
 
 /******************************************************************************
  * Fragment Generation Functions
  ******************************************************************************/
-IMG_PUINT32 USEGenWriteDummyEndFragment (IMG_PUINT32 pui32Base);
+IMG_INTERNAL IMG_PUINT32 USEGenWriteDummyEndFragment (IMG_PUINT32 pui32Base);
 
 IMG_INTERNAL IMG_PUINT32 USEGenSetUSEEndFlag (IMG_PUINT32 pui32Base);
 
@@ -880,20 +880,20 @@ IMG_PUINT32 USEGenWritePackForPBEGammaFragment (IMG_PUINT32 pui32Base,
 IMG_PUINT32 USEGenWriteEndPreCullVtxShaderFragment (IMG_PUINT32 pui32Base);
 #endif
 
-IMG_PUINT32 USEGenWriteEndVtxShaderFragment (IMG_PUINT32 pui32Base);
+IMG_INTERNAL IMG_PUINT32 USEGenWriteEndVtxShaderFragment (IMG_PUINT32 pui32Base);
 
-IMG_PUINT32 USEGenWriteEndVtxShaderGBFragment(IMG_PUINT32 pui32Base,
+IMG_INTERNAL IMG_PUINT32 USEGenWriteEndVtxShaderGBFragment(IMG_PUINT32 pui32Base,
 											  IMG_UINT32 ui32SecondaryGBBase);
 
-IMG_PUINT32 USEGenWriteEndGeomShaderFragment (IMG_PUINT32 pui32Base,
+IMG_INTERNAL IMG_PUINT32 USEGenWriteEndGeomShaderFragment (IMG_PUINT32 pui32Base,
 											  IMG_UINT32 ui32NumPartitions,
 											  IMG_BOOL bDoublePartition);
 #if defined(FIX_HW_BRN_31988)
-IMG_PUINT32 USEGenWriteBRN31988Fragment (IMG_PUINT32 pui32Base);
+IMG_INTERNAL IMG_PUINT32 USEGenWriteBRN31988Fragment (IMG_PUINT32 pui32Base);
 
 #endif
 
-IMG_PUINT32 USEGenWriteStateEmitFragment (IMG_PUINT32 pui32Base,
+IMG_INTERNAL IMG_PUINT32 USEGenWriteStateEmitFragment (IMG_PUINT32 pui32Base,
 										  IMG_UINT32 ui32NumWrites,
 										  IMG_UINT32 ui32Start);
 
@@ -907,7 +907,7 @@ typedef enum _USEGEN_PHASE_DEPENDANCY_
 						 *   tested */
 } USEGEN_PHASE_DEPENDANCY;
 
-IMG_PUINT32 USEGenWritePhaseFragment (IMG_PUINT32 pui32Base,
+IMG_INTERNAL IMG_PUINT32 USEGenWritePhaseFragment (IMG_PUINT32 pui32Base,
 									  IMG_UINT32 ui32NextPhase,
 									  IMG_UINT32 ui32NumTemps,
 									  USEGEN_PHASE_DEPENDANCY eDependency,
@@ -918,10 +918,10 @@ IMG_PUINT32 USEGenWritePhaseFragment (IMG_PUINT32 pui32Base,
 
 #endif
 
-IMG_PUINT32 USEGenWriteISPFeedbackFragment(IMG_PUINT32 				 pui32BufferBase,
+IMG_INTERNAL IMG_PUINT32 USEGenWriteISPFeedbackFragment(IMG_PUINT32 				 pui32BufferBase,
 										   PUSEGEN_ISP_FEEDBACK_PROG psProg);
 
-IMG_PUINT32 USEGenWritePixPosFromTileSecondaryFragment(IMG_PUINT32	pui32Base,
+IMG_INTERNAL IMG_PUINT32 USEGenWritePixPosFromTileSecondaryFragment(IMG_PUINT32	pui32Base,
 													   IMG_UINT32	ui32TileSA,
 													   IMG_UINT32	ui32AddressSA,
 													   IMG_UINT32	ui32StrideSA,
@@ -936,7 +936,7 @@ IMG_PUINT32 USEGenWritePixPosFromTileSecondaryFragment(IMG_PUINT32	pui32Base,
 													   IMG_BOOL 	bEnableRTAs,
 													   IMG_UINT32 	ui32ArrayStride);
 
-IMG_PUINT32 USEGenPixDirectFragment(IMG_PUINT32 pui32Base,
+IMG_INTERNAL IMG_PUINT32 USEGenPixDirectFragment(IMG_PUINT32 pui32Base,
 									IMG_UINT32 ui32AddressSA,
 									IMG_UINT32 ui32StrideSA,
 									IMG_UINT32 ui32DataSize,
@@ -950,17 +950,17 @@ IMG_PUINT32 USEGenPixDirectFragment(IMG_PUINT32 pui32Base,
 									IMG_BOOL bUsePredication,
 									IMG_UINT32 ui32TwiddleTmpRegNum);
 
-IMG_PUINT32 USEGenIntRegStoreFragment(PUSEGEN_INT_REG_STORE_PROG psProg,
+IMG_INTERNAL IMG_PUINT32 USEGenIntRegStoreFragment(PUSEGEN_INT_REG_STORE_PROG psProg,
 									  IMG_PUINT32 pui32Buffer);
-IMG_PUINT32 USEGenIntRegLoadFragment(PUSEGEN_INT_REG_LOAD_PROG psProg,
+IMG_INTERNAL IMG_PUINT32 USEGenIntRegLoadFragment(PUSEGEN_INT_REG_LOAD_PROG psProg,
 									 IMG_PUINT32 pui32Buffer);
 
-IMG_PUINT32 USEGenWriteTileBufferSecProgram(IMG_PUINT32 pui32Base,
+IMG_INTERNAL IMG_PUINT32 USEGenWriteTileBufferSecProgram(IMG_PUINT32 pui32Base,
 											IMG_UINT32 ui32FirstSA,
 											IMG_UINT32 ui32NumBuffers,
 											IMG_PUINT32 pui32TempCount);
 
-IMG_PUINT32 USEGenTileBufferAccess(IMG_PUINT32 pui32Base,
+IMG_INTERNAL IMG_PUINT32 USEGenTileBufferAccess(IMG_PUINT32 pui32Base,
 								   IMG_UINT32 ui32TileSA,
 								   IMG_UINT32 ui32DataSize,
 								   IMG_UINT32 ui32DataReg,
@@ -977,14 +977,14 @@ typedef enum _USEGEN_SPECIALOBJ_TYPE_
 } USEGEN_SPECIALOBJ_TYPE;
 
 
-IMG_PUINT32 USEGenWriteSpecialObjVtxProgram (IMG_PUINT32 pui32Base,
+IMG_INTERNAL IMG_PUINT32 USEGenWriteSpecialObjVtxProgram (IMG_PUINT32 pui32Base,
 											 USEGEN_SPECIALOBJ_TYPE eProgramType,
 											IMG_DEV_VIRTADDR uBaseAddress,
 											IMG_DEV_VIRTADDR uCodeHeapBase,
 											IMG_UINT32 ui32CodeHeapBaseIndex);
 
 
-IMG_PUINT32 USEGenWriteStateEmitProgram (IMG_PUINT32 pui32Base,
+IMG_INTERNAL IMG_PUINT32 USEGenWriteStateEmitProgram (IMG_PUINT32 pui32Base,
 										 IMG_UINT32 ui32NumWrites,
 										 IMG_UINT32 ui32Start,
 										 IMG_BOOL bComplex);
@@ -998,28 +998,28 @@ IMG_PUINT32 USEGenWritePreCullClearVtxProgram (IMG_PUINT32 pui32Base,
 											   IMG_UINT32 ui32NumOutputs);
 #endif
 
-IMG_PUINT32 USEGenWriteClearVtxProgram (IMG_PUINT32 pui32Base, IMG_UINT32 ui32NumOutputs);
+IMG_INTERNAL IMG_PUINT32 USEGenWriteClearVtxProgram (IMG_PUINT32 pui32Base, IMG_UINT32 ui32NumOutputs);
 
 #if defined(FIX_HW_BRN_29838)
 	IMG_PUINT32 USEGenWriteClearPixelProgramF16(IMG_PUINT32 pui32Base);
 #endif
 
-IMG_PUINT32 USEGenWriteClearPixelProgram (IMG_PUINT32 pui32Base, IMG_BOOL bUseSecondary);
-IMG_PUINT32 USEGenWriteAccum2PProgram (IMG_PUINT32 pui32Base);
+IMG_INTERNAL IMG_PUINT32 USEGenWriteClearPixelProgram (IMG_PUINT32 pui32Base, IMG_BOOL bUseSecondary);
+IMG_INTERNAL IMG_PUINT32 USEGenWriteAccum2PProgram (IMG_PUINT32 pui32Base);
 
-IMG_PUINT32 USEGenWriteSpecialRTAGSProgram (IMG_PUINT32 pui32Base,
+IMG_INTERNAL IMG_PUINT32 USEGenWriteSpecialRTAGSProgram (IMG_PUINT32 pui32Base,
 											IMG_UINT32 ui32VtxSize,
 											IMG_PUINT32 pui32TempsUsed);
 
-IMG_PUINT32 USEGenWriteCGPhase1StateEmitProgram (IMG_PUINT32 pui32Base,
+IMG_INTERNAL IMG_PUINT32 USEGenWriteCGPhase1StateEmitProgram (IMG_PUINT32 pui32Base,
 												 IMG_UINT32 ui32State0,
 												 IMG_UINT32 ui32State1,
 												 IMG_UINT32 ui32State2,
 												 IMG_UINT32 ui32State3);
 
-IMG_PUINT32 USEGenWriteCGITPProgram (IMG_PUINT32 pui32Base);
+IMG_INTERNAL IMG_PUINT32 USEGenWriteCGITPProgram (IMG_PUINT32 pui32Base);
 
-IMG_PUINT32 USEGenWriteCGVtxBufferPtrProgram (IMG_PUINT32 pui32Base);
+IMG_INTERNAL IMG_PUINT32 USEGenWriteCGVtxBufferPtrProgram (IMG_PUINT32 pui32Base);
 
 #if defined(SGX_FEATURE_VCB)
 IMG_PUINT32 USEGenWritePreCullVtxDMAProgram (IMG_PUINT32 pui32Base,
@@ -1029,7 +1029,7 @@ IMG_PUINT32 USEGenWritePreCullVtxDMAProgram (IMG_PUINT32 pui32Base,
 											 IMG_BOOL bIterateVertexID);
 #endif
 
-IMG_PUINT32 USEGenWriteVtxDMAProgram (IMG_PUINT32 pui32Base,
+IMG_INTERNAL IMG_PUINT32 USEGenWriteVtxDMAProgram (IMG_PUINT32 pui32Base,
 									  IMG_UINT32 ui32VtxSize,
 									  IMG_BOOL bViewportIdxPresent,
 									  IMG_UINT32 ui32NumVpt,
@@ -1040,12 +1040,12 @@ IMG_PUINT32 USEGenWriteVtxDMAProgram (IMG_PUINT32 pui32Base,
 									  PUSEGEN_INT_REG_STORE_PROG psIntRegProg);
 
 
-IMG_PUINT32 USEGenWriteRTATerminateStateProgram (IMG_PUINT32 pui32Base,
+IMG_INTERNAL IMG_PUINT32 USEGenWriteRTATerminateStateProgram (IMG_PUINT32 pui32Base,
 												 IMG_UINT32 ui32TAClipWord,
 												 IMG_UINT32 ui32RTNumber,
 												 IMG_BOOL bFinalRT);
 
-IMG_PUINT32 USEGenWriteBGDependentLoad(IMG_PUINT32 pui32Base,
+IMG_INTERNAL IMG_PUINT32 USEGenWriteBGDependentLoad(IMG_PUINT32 pui32Base,
 									   IMG_UINT32 ui32PrimOffset,
 									   IMG_UINT32 ui32SecOffset,
 									   USEGEN_BANK_TYPE eResultBank,
@@ -1063,7 +1063,7 @@ IMG_PUINT32 USEGenWriteHybridTwiddleAddress(IMG_PUINT32		psUSEInst,
 											IMG_INT32		i32Stride,
 											IMG_UINT32		ui32SurfaceAddrSAReg);
 #else  /* defined (SGX_FEATURE_HYBRID_TWIDDLING) */
-IMG_PUINT32 USEGenWriteTwiddleAddress(IMG_PUINT32	psUSEInst,
+IMG_INTERNAL IMG_PUINT32 USEGenWriteTwiddleAddress(IMG_PUINT32	psUSEInst,
 						   			  IMG_UINT32	ui32Width,
 								 	  IMG_UINT32	ui32Height,
 									  IMG_UINT32	ui32SurfaceAddrSAReg,

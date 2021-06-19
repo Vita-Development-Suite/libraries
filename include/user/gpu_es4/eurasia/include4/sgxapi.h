@@ -118,6 +118,20 @@ typedef enum _SGX_CONTEXT_PRIORITY_
 	SGX_CONTEXT_PRIORITY_FORCE_I32	= 0x7fffffff
 } SGX_CONTEXT_PRIORITY;
 
+#if defined(__psp2__)
+typedef struct _SGX_CREATERENDERCONTEXT_
+{
+	IMG_UINT32				ui32Flags;
+	IMG_SID					hDevCookie;
+	IMG_SID					hDevMemContext;
+	IMG_UINT32				ui32PBSize;
+	IMG_UINT32				ui32PBSizeLimit;
+	IMG_UINT32				ui32VisTestResultBufferSize;
+	IMG_UINT32				ui32MaxSACount;
+	IMG_SID					hPbMem;
+	IMG_BOOL				bPerContextPB;
+} SGX_CREATERENDERCONTEXT, *PSGX_CREATERENDERCONTEXT;
+#else
 typedef struct _SGX_CREATERENDERCONTEXT_
 {
 	IMG_UINT32				ui32Flags;
@@ -136,6 +150,7 @@ typedef struct _SGX_CREATERENDERCONTEXT_
 	IMG_UINT32				ui32MaxSACount;
 	IMG_BOOL				bPerContextPB;
 } SGX_CREATERENDERCONTEXT, *PSGX_CREATERENDERCONTEXT;
+#endif
 
 #define SGX_CREATERCTXTFLAGS_SHAREDPB	0x00000001
 
@@ -146,6 +161,34 @@ typedef enum _SGX_SCALING_
 	SGX_UPSCALING,
 	SGX_SCALING_FORCE_I32 = 0x7FFFFFFF
 } SGX_SCALING;
+
+#if defined (__psp2__)
+
+typedef struct _SGX_ADDRENDTARG_
+{
+	IMG_UINT32				ui32Flags;
+	IMG_UINT32				ui32RendersPerFrame;	/* Maximum renders per frame before blocking behaviour, pass 0 for defaults */
+	IMG_UINT32				ui32RendersPerQueueSwap;
+	IMG_HANDLE				hRenderContext;
+	IMG_SID					hDevCookie;
+	IMG_UINT32				ui32NumPixelsX;
+	IMG_UINT32				ui32NumPixelsY;
+	IMG_UINT16				ui16MSAASamplesInX;
+	IMG_UINT16				ui16MSAASamplesInY;
+	SGX_SCALING				eForceScalingInX;
+	SGX_SCALING				eForceScalingInY;
+	IMG_UINT32				ui32BGObjUCoord;	/* Texture U-coordinate of right-hand vertex of background object */
+	PVRSRV_ROTATION			eRotation;
+	IMG_UINT16				ui16NumRTsInArray;
+	IMG_UINT8				ui8MacrotileCountX;
+	IMG_UINT8				ui8MacrotileCountY;
+	IMG_INT32				i32DataMemblockUID;
+	IMG_BOOL				bUseExternalUID;
+	IMG_SID					hDataMemory;
+	IMG_UINT32				ui32MultisampleLocations;
+} SGX_ADDRENDTARG, *PSGX_ADDRENDTARG;
+
+#else
 
 typedef struct _SGX_ADDRENDTARG_
 {
@@ -167,6 +210,8 @@ typedef struct _SGX_ADDRENDTARG_
 	PVRSRV_ROTATION			eRotation;
 	IMG_UINT16				ui16NumRTsInArray;
 } SGX_ADDRENDTARG, *PSGX_ADDRENDTARG;
+
+#endif
 
 #define SGX_ADDRTFLAGS_SHAREDRTDATA						0x00000001
 #define SGX_ADDRTFLAGS_USEOGLMODE						0x00000002
@@ -282,7 +327,8 @@ typedef struct _SGX_KICKTA_COMMON_
 	IMG_UINT32			ui32ISPBGObjDepth;
 	IMG_UINT32			ui32ISPBGObj;
 	IMG_UINT32			ui32ISPIPFMisc;
-#if defined(SGX545)
+
+#if defined(SGX545) || defined(__psp2__)
 	IMG_UINT32			ui32GSGBase;
 	IMG_UINT32			ui32GSGStride;
 	IMG_UINT32			ui32GSGWrapAddr;
@@ -951,6 +997,13 @@ typedef struct _SGXTQ_VPBLITOP_
 
 
 /* Structures passed in as parameters to transfer queue functions */
+#if defined (__psp2__)
+typedef struct _SGX_TRANSFERCONTEXTCREATE_
+{
+	IMG_SID					hDevMemContext;
+	IMG_SID					hPbMem;
+} SGX_TRANSFERCONTEXTCREATE;
+#else
 typedef struct _SGX_TRANSFERCONTEXTCREATE_
 {
 #if defined (SUPPORT_SID_INTERFACE)
@@ -964,6 +1017,7 @@ typedef struct _SGX_TRANSFERCONTEXTCREATE_
 	IMG_HANDLE hCallbackHandle;
 #endif
 } SGX_TRANSFERCONTEXTCREATE;
+#endif
 
 
 /* transfer queue flags */
@@ -1180,9 +1234,17 @@ PVRSRV_ERROR IMG_CALLCONV SGXCreateTransferContext(PVRSRV_DEV_DATA *psDevData,
 												   IMG_UINT32 ui32RequestedSBSize,
 												   SGX_TRANSFERCONTEXTCREATE *psCreateTransfer,
 												   IMG_HANDLE *phTransferContext);
+
+#if defined (__psp2__)
+IMG_IMPORT
+PVRSRV_ERROR IMG_CALLCONV SGXDestroyTransferContext(PVRSRV_DEV_DATA *psDevData,
+													IMG_HANDLE hTransferContext,
+													IMG_BOOL bForceCleanup);
+#else
 IMG_IMPORT
 PVRSRV_ERROR IMG_CALLCONV SGXDestroyTransferContext(IMG_HANDLE hTransferContext,
 													IMG_BOOL bForceCleanup);
+#endif
 
 IMG_IMPORT
 PVRSRV_ERROR IMG_CALLCONV SGXQueueTransfer(IMG_HANDLE hTransferContext,

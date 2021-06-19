@@ -38,7 +38,11 @@
 /*****************************************************************************
  Calling conventions
 *****************************************************************************/
+#if (defined(__psp2__) && defined(PSP2_PRX_EXPORT))
+#define PDS_CALLCONV __declspec (dllexport)
+#else
 #define PDS_CALLCONV IMG_INTERNAL
+#endif
 
 /*****************************************************************************
  Macro definitions

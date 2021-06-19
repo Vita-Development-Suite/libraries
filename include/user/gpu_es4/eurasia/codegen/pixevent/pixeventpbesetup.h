@@ -77,7 +77,7 @@ typedef struct _PBE_RENDER_PARAMS_
 
 } PBE_RENDER_PARAMS, *PPBE_RENDER_PARAMS;
 
-IMG_VOID WritePBEEmitState(PBE_SURF_PARAMS *psSurfParams,
+IMG_INTERNAL IMG_VOID WritePBEEmitState(PBE_SURF_PARAMS *psSurfParams,
 						   PBE_RENDER_PARAMS *psRenderParams,
 						   IMG_PUINT32 pui32Base);
 

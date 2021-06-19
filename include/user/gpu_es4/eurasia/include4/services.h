@@ -40,7 +40,7 @@ extern "C" {
 #include "img_defs.h"
 #include "servicesext.h"
 #include "pdumpdefs.h"
-#include <img_list.h>
+#include "img_list.h"
 
 
 /* The comment below is the front page for code-generated doxygen documentation */
@@ -428,6 +428,74 @@ typedef struct _PVRSRV_MEMBLK_
 */
 typedef struct _PVRSRV_KERNEL_MEM_INFO_ *PPVRSRV_KERNEL_MEM_INFO;
 
+#if defined (__psp2__)
+typedef struct _PVRSRV_CLIENT_MEM_INFO_
+{
+	/* TODO - remove when sgxkick is moved into userspace */
+	IMG_PVOID				pvLinAddrKM;
+
+	/* CPU Virtual Address */
+	IMG_PVOID				pvLinAddr;
+
+	/* Device Virtual Address */
+	IMG_DEV_VIRTADDR		sDevVAddr;
+
+	/* allocation flags */
+	IMG_UINT32				ui32Flags;
+
+	/*
+		client allocation flags
+		FIXME: remove when drivers use their own structures.
+	*/
+	IMG_UINT32				ui32ClientFlags;
+
+	/* allocation size in bytes */
+	IMG_SIZE_T				uAllocSize;
+
+	/* ptr to associated client sync info - NULL if no sync */
+	struct _PVRSRV_CLIENT_SYNC_INFO_	*psClientSyncInfo;
+
+#if defined (SUPPORT_SID_INTERFACE)
+	/* handle to client mapping data (OS specific) */
+	IMG_SID								hMappingInfo;
+
+	/* handle to kernel mem info */
+	IMG_SID								hKernelMemInfo;
+
+	/* resman handle for UM mapping clean-up */
+	IMG_SID								hResItem;
+#else
+	/* handle to client mapping data (OS specific) */
+	IMG_HANDLE							hMappingInfo;
+
+	/* handle to kernel mem info */
+	IMG_HANDLE							hKernelMemInfo;
+
+	/* resman handle for UM mapping clean-up */
+	IMG_HANDLE							hResItem;
+#endif
+
+#if defined(SUPPORT_MEMINFO_IDS)
+#if !defined(USE_CODE)
+	/* Globally unique "stamp" for allocation (not re-used until wrap) */
+	IMG_UINT64							ui64Stamp;
+#else /* !defined(USE_CODE) */
+	IMG_UINT32							dummy1;
+	IMG_UINT32							dummy2;
+#endif /* !defined(USE_CODE) */
+#endif /* defined(SUPPORT_MEMINFO_IDS) */
+
+	IMG_UINT64 		uiSubSystem;
+	/*
+		ptr to next mem info
+		FIXME: D3D uses psNext for mid-scene texture reload - really need it?
+	*/
+	struct _PVRSRV_CLIENT_MEM_INFO_		*psNext;
+
+	/* Device Virtual Addresses for the YUV MM planes */
+	IMG_UINT32 planeOffsets[PVRSRV_MAX_NUMBER_OF_MM_BUFFER_PLANES];
+} PVRSRV_CLIENT_MEM_INFO, *PPVRSRV_CLIENT_MEM_INFO;
+#else
 typedef struct _PVRSRV_CLIENT_MEM_INFO_
 {
 	/* CPU Virtual Address */
@@ -503,6 +571,7 @@ typedef struct _PVRSRV_CLIENT_MEM_INFO_
     /* Device Virtual Addresses for the YUV MM planes */
 	IMG_UINT32 planeOffsets[PVRSRV_MAX_NUMBER_OF_MM_BUFFER_PLANES];
 } PVRSRV_CLIENT_MEM_INFO, *PPVRSRV_CLIENT_MEM_INFO;
+#endif
 
 /*
 	Multiple buffer device virtual mapping management
@@ -611,6 +680,109 @@ typedef enum
 	PVRSRV_MISC_INFO_CPUCACHEOP_FLUSH
 } PVRSRV_MISC_INFO_CPUCACHEOP_TYPE;
 
+#if defined (__psp2__)
+
+/*!
+ ******************************************************************************
+ * Structure to retrieve misc. information from services
+ *****************************************************************************/
+typedef struct _PVRSRV_MISC_INFO_
+{
+	IMG_UINT32	ui32StateRequest;		/*!< requested State Flags */
+	IMG_UINT32	ui32StatePresent;		/*!< Present/Valid State Flags */
+
+	/* Memory Stats/DDK version string depending on ui32StateRequest flags */
+	IMG_CHAR	*pszMemoryStr;
+	IMG_UINT32	ui32MemoryStrLen;
+
+	/*!< SOC Timer register */
+	IMG_VOID	*pvSOCTimerRegisterUM;
+#if defined (SUPPORT_SID_INTERFACE)
+	IMG_SID		hSOCTimerRegisterOSMemHandle;
+	IMG_SID		hSOCTimerRegisterMappingInfo;
+#else
+	IMG_HANDLE	hSOCTimerRegisterOSMemHandle;
+	IMG_HANDLE	hSOCTimerRegisterMappingInfo;
+#endif
+
+	/*!< SOC Clock Gating registers */
+	IMG_VOID	*pvSOCClockGateRegs;
+	IMG_UINT32	ui32SOCClockGateRegsSize;
+
+	/* global event object */
+	PVRSRV_EVENTOBJECT	sGlobalEventObject;//FIXME: should be private to services
+#if defined (SUPPORT_SID_INTERFACE)
+	IMG_EVENTSID		hOSGlobalEvent;
+#else
+	IMG_HANDLE			hOSGlobalEvent;
+#endif
+
+	/*!< CPU cache flush controls: */
+	struct
+	{
+		/*!< Defer the CPU cache op to the next HW op to be submitted (else flush now) */
+		IMG_BOOL bDeferOp;
+
+		/*!< Type of cache operation to perform */
+		PVRSRV_MISC_INFO_CPUCACHEOP_TYPE eCacheOpType;
+
+		/* This union is a bit ugly. We need it because we'll use the psMemInfo
+		 * directly in the srvclient PVRSRVGetMiscInfo code, and then convert it
+		 * to a kernel meminfo if required. Try to not waste space.
+		 */
+#if !defined (SUPPORT_SID_INTERFACE)
+		union
+		{
+			/*!< Input client meminfo (UM side) */
+			PVRSRV_CLIENT_MEM_INFO *psClientMemInfo;
+
+			/*!< Output kernel meminfo (Bridge+KM side) */
+			struct _PVRSRV_KERNEL_MEM_INFO_ *psKernelMemInfo;
+		} u;
+#endif
+
+		/*!< Offset in MemInfo to start cache op */
+		IMG_VOID *pvBaseVAddr;
+
+		/*!< Length of range to perform cache op  */
+		IMG_UINT32	ui32Length;
+
+		IMG_BYTE *pbRowStart;
+		IMG_BYTE *pbRowEnd;
+		IMG_BYTE *pbRowThresh;
+		IMG_BOOL bStridedCacheOp;
+		IMG_UINT32 ui32Stride;
+	} sCacheOpCtl;
+
+	/*!< Meminfo refcount controls: */
+	struct
+	{
+		/* This union is a bit ugly. We need it because we'll use the psMemInfo
+		 * directly in the srvclient PVRSRVGetMiscInfo code, and then convert it
+		 * to a kernel meminfo if required. Try to not waste space.
+		 */
+#if !defined(SUPPORT_SID_INTERFACE)
+		union
+		{
+			/*!< Input client meminfo (UM side) */
+			PVRSRV_CLIENT_MEM_INFO *psClientMemInfo;
+
+			/*!< Output kernel meminfo (Bridge+KM side) */
+			struct _PVRSRV_KERNEL_MEM_INFO_ *psKernelMemInfo;
+		} u;
+#endif
+
+		/*!< Resulting refcount */
+		IMG_UINT32 ui32RefCount;
+	} sGetRefCountCtl;
+
+	/* Note: add misc. items as required */
+	IMG_UINT32	aui32DDKVersion[4];
+
+} PVRSRV_MISC_INFO;
+
+#else
+
 /*!
  ******************************************************************************
  * Structure to retrieve misc. information from services
@@ -710,6 +882,8 @@ typedef struct _PVRSRV_MISC_INFO_
 	} sGetRefCountCtl;
 } PVRSRV_MISC_INFO;
 
+#endif
+
 /*!
  ******************************************************************************
  * Synchronisation token
@@ -772,7 +946,7 @@ PVRSRV_ERROR IMG_CALLCONV PVRSRVGetMiscInfo (IMG_CONST PVRSRV_CONNECTION *psConn
 IMG_IMPORT
 PVRSRV_ERROR IMG_CALLCONV PVRSRVReleaseMiscInfo (IMG_CONST PVRSRV_CONNECTION *psConnection, PVRSRV_MISC_INFO *psMiscInfo);
 
-#if 1//FIXME: move these to kernel services header
+#if 0//FIXME: move these to kernel services header
 IMG_IMPORT
 IMG_UINT32 ReadHWReg(IMG_PVOID pvLinRegBaseAddr, IMG_UINT32 ui32Offset);
 
@@ -850,6 +1024,16 @@ PVRSRV_ERROR IMG_CALLCONV PVRSRVAllocDeviceMem2(IMG_CONST PVRSRV_DEV_DATA	*psDev
 									IMG_UINT32		ui32PrivDataLength,
 									PVRSRV_CLIENT_MEM_INFO	**ppsMemInfo);
 
+#if defined (__psp2__)
+IMG_IMPORT
+PVRSRV_ERROR IMG_CALLCONV PVRSRVAllocDeviceMem(IMG_CONST PVRSRV_DEV_DATA	*psDevData,
+	IMG_SID			hDevMemHeap,
+	IMG_UINT32		ui32Attribs,
+	IMG_SIZE_T		ui32Size,
+	IMG_SIZE_T		ui32Alignment,
+	IMG_SID			hHWmemCtx,
+	PVRSRV_CLIENT_MEM_INFO	**ppsMemInfo);
+#else
 IMG_IMPORT
 PVRSRV_ERROR IMG_CALLCONV PVRSRVAllocDeviceMem(IMG_CONST PVRSRV_DEV_DATA	*psDevData,
 #if defined (SUPPORT_SID_INTERFACE)
@@ -861,6 +1045,7 @@ PVRSRV_ERROR IMG_CALLCONV PVRSRVAllocDeviceMem(IMG_CONST PVRSRV_DEV_DATA	*psDevD
 									IMG_SIZE_T		ui32Size,
 									IMG_SIZE_T		ui32Alignment,
 									PVRSRV_CLIENT_MEM_INFO	**ppsMemInfo);
+#endif
 
 IMG_IMPORT
 PVRSRV_ERROR IMG_CALLCONV PVRSRVFreeDeviceMem(IMG_CONST PVRSRV_DEV_DATA	*psDevData,
@@ -1187,7 +1372,12 @@ PVRSRV_ERROR IMG_CALLCONV PVRSRVGetDCBuffers2(IMG_HANDLE hDevice,
 IMG_IMPORT
 PVRSRV_ERROR IMG_CALLCONV PVRSRVSwapToDCBuffer (IMG_HANDLE hDevice,
 #if defined (SUPPORT_SID_INTERFACE)
+#if defined (__psp2__)
+										IMG_SID    hBufferOld,
+										IMG_SID    hBufferNew,
+#else
 										IMG_SID    hBuffer,
+#endif
 #else
 										IMG_HANDLE hBuffer,
 #endif
@@ -1459,10 +1649,15 @@ IMG_IMPORT IMG_BOOL IMG_CALLCONV PVRSRVGetAppHint(IMG_VOID			*pvHintState,
  *****************************************************************************/
 
 /* Exported APIs */
-IMG_IMPORT IMG_PVOID IMG_CALLCONV PVRSRVAllocUserModeMem (IMG_SIZE_T ui32Size);
+#if defined(PSP2_PRX_EXPORT)
+IMG_PVOID IMG_CALLCONV PVRSRVAllocUserModeMem(IMG_SIZE_T ui32Size);
+IMG_VOID  IMG_CALLCONV PVRSRVFreeUserModeMem(IMG_PVOID pvMem);
+#else
+IMG_IMPORT IMG_PVOID IMG_CALLCONV PVRSRVAllocUserModeMem(IMG_SIZE_T ui32Size);
+IMG_IMPORT IMG_VOID  IMG_CALLCONV PVRSRVFreeUserModeMem(IMG_PVOID pvMem);
+#endif
 IMG_IMPORT IMG_PVOID IMG_CALLCONV PVRSRVCallocUserModeMem (IMG_SIZE_T ui32Size);
 IMG_IMPORT IMG_PVOID IMG_CALLCONV PVRSRVReallocUserModeMem (IMG_PVOID pvBase, IMG_SIZE_T uNewSize);
-IMG_IMPORT IMG_VOID  IMG_CALLCONV PVRSRVFreeUserModeMem (IMG_PVOID pvMem);
 IMG_IMPORT IMG_VOID PVRSRVMemCopy(IMG_VOID *pvDst, const IMG_VOID *pvSrc, IMG_SIZE_T ui32Size);
 IMG_IMPORT IMG_VOID PVRSRVMemSet(IMG_VOID *pvDest, IMG_UINT8 ui8Value, IMG_SIZE_T ui32Size);
 
@@ -1563,7 +1758,9 @@ IMG_IMPORT PVRSRV_ERROR PVRSRVEventObjectWait(const PVRSRV_CONNECTION *psConnect
  @Description	Creates an empty Modification object to be later used by PVRSRVModifyPendingSyncOps
 
  ******************************************************************************/
+#if !defined (__psp2__)
 IMG_IMPORT
+#endif
 PVRSRV_ERROR IMG_CALLCONV PVRSRVCreateSyncInfoModObj(const PVRSRV_CONNECTION *psConnection,
 #if defined (SUPPORT_SID_INTERFACE)
 													 IMG_SID *phKernelSyncInfoModObj
@@ -1580,7 +1777,9 @@ PVRSRV_ERROR IMG_CALLCONV PVRSRVCreateSyncInfoModObj(const PVRSRV_CONNECTION *ps
  @Description	Destroys a Modification object.  Must be empty.
 
  ******************************************************************************/
+#if !defined (__psp2__)
 IMG_IMPORT
+#endif
 PVRSRV_ERROR IMG_CALLCONV PVRSRVDestroySyncInfoModObj(const PVRSRV_CONNECTION *psConnection,
 #if defined (SUPPORT_SID_INTERFACE)
 													  IMG_SID hKernelSyncInfoModObj
@@ -1619,6 +1818,15 @@ PVRSRV_ERROR IMG_CALLCONV PVRSRVDestroySyncInfoModObj(const PVRSRV_CONNECTION *p
 
 
  ******************************************************************************/
+#if defined (__psp2__)
+PVRSRV_ERROR IMG_CALLCONV PVRSRVModifyPendingSyncOps(const PVRSRV_CONNECTION *psConnection,
+	IMG_SID    hKernelSyncInfoModObj,
+	IMG_PVOID psPsp2SyncInfo,
+	IMG_UINT32 ui32SyncInfoNum,
+	IMG_UINT32 ui32ModifyFlags,
+	IMG_UINT32 *pui32ReadOpsPending,
+	IMG_UINT32 *pui32WriteOpsPending);
+#else
 IMG_IMPORT
 PVRSRV_ERROR IMG_CALLCONV PVRSRVModifyPendingSyncOps(const PVRSRV_CONNECTION *psConnection,
 #if defined (SUPPORT_SID_INTERFACE)
@@ -1630,6 +1838,7 @@ PVRSRV_ERROR IMG_CALLCONV PVRSRVModifyPendingSyncOps(const PVRSRV_CONNECTION *ps
 													  IMG_UINT32 ui32ModifyFlags,
 													  IMG_UINT32 *pui32ReadOpsPending,
 													  IMG_UINT32 *pui32WriteOpsPending);
+#endif
 
 /*!
  ******************************************************************************
@@ -1644,7 +1853,9 @@ PVRSRV_ERROR IMG_CALLCONV PVRSRVModifyPendingSyncOps(const PVRSRV_CONNECTION *ps
 				described above in PVRSRVModifyPendingSyncOps
 
  ******************************************************************************/
+#if !defined (__psp2__)
 IMG_IMPORT
+#endif
 PVRSRV_ERROR IMG_CALLCONV PVRSRVModifyCompleteSyncOps(const PVRSRV_CONNECTION *psConnection,
 #if defined (SUPPORT_SID_INTERFACE)
 													  IMG_SID hKernelSyncInfoModObj
@@ -1766,7 +1977,9 @@ PVRSRV_ERROR IMG_CALLCONV PVRSRVSyncOpsFlushToDelta(const PVRSRV_CONNECTION *psC
 
  ******************************************************************************/
 
+#if !defined (__psp2__)
 IMG_IMPORT
+#endif
 PVRSRV_ERROR IMG_CALLCONV PVRSRVAllocSyncInfo(IMG_CONST PVRSRV_DEV_DATA	*psDevData,
 											  PVRSRV_CLIENT_SYNC_INFO **ppsSyncInfo);
 
@@ -1780,7 +1993,9 @@ PVRSRV_ERROR IMG_CALLCONV PVRSRVAllocSyncInfo(IMG_CONST PVRSRV_DEV_DATA	*psDevDa
 
  ******************************************************************************/
 
+#if !defined (__psp2__)
 IMG_IMPORT
+#endif
 PVRSRV_ERROR IMG_CALLCONV PVRSRVFreeSyncInfo(IMG_CONST PVRSRV_DEV_DATA *psDevData,
 											 PVRSRV_CLIENT_SYNC_INFO *psSyncInfo);
 

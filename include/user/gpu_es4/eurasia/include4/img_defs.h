@@ -97,6 +97,22 @@ typedef char				TCHAR, *PTCHAR, *PTSTR;
 				#define IMG_IMPORT
 				#define IMG_RESTRICT	__restrict__
 
+			#elif defined(__psp2__) && defined(PSP2_PRX_EXPORT)
+
+				#define IMG_CALLCONV
+				#define IMG_INTERNAL	__declspec(dllexport)
+				#define IMG_EXPORT		__declspec(dllexport)
+				#define IMG_IMPORT		__declspec(dllexport)
+				#define IMG_RESTRICT	__restrict__
+
+			#elif defined(__psp2__)
+
+				#define IMG_CALLCONV
+				#define IMG_INTERNAL	__attribute__((visibility("hidden")))
+				#define IMG_EXPORT		__attribute__((visibility("default")))
+				#define IMG_IMPORT
+				#define IMG_RESTRICT	__restrict__
+
 			#else
 					#error("define an OS")
 			#endif

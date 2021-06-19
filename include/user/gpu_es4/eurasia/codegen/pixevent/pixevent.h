@@ -127,7 +127,7 @@
 
 
 
-IMG_UINT32 * WriteEndOfTileUSSECode(
+IMG_INTERNAL IMG_UINT32 * WriteEndOfTileUSSECode(
 				IMG_UINT32 *pui32BufferBase,
 				IMG_UINT32 *pui32EmitWords,
 				IMG_UINT32 ui32SideBand
@@ -151,14 +151,14 @@ IMG_PUINT32 WriteEndOfTileUSSECodeMultiEmit(IMG_UINT32 *pui32BufferBase,
 											);
 #endif /* defined(SGX545) */
 
-IMG_UINT32 * WriteEndOfTileUSSECode2KStride(IMG_UINT32 *pui32BufferBase, IMG_UINT32 *pui32EmitWords, IMG_UINT32 ui32SideBand);
+IMG_INTERNAL IMG_UINT32 * WriteEndOfTileUSSECode2KStride(IMG_UINT32 *pui32BufferBase, IMG_UINT32 *pui32EmitWords, IMG_UINT32 ui32SideBand);
 
 #if defined(FIX_HW_BRN_31982)
-IMG_UINT32 * WriteEndOfTileUSSECode2xMSAA(IMG_UINT32 *pui32BufferBase, IMG_UINT32 *pui32EmitWords, IMG_UINT32 ui32SideBand);
+IMG_INTERNAL IMG_UINT32 * WriteEndOfTileUSSECode2xMSAA(IMG_UINT32 *pui32BufferBase, IMG_UINT32 *pui32EmitWords, IMG_UINT32 ui32SideBand);
 #endif
-IMG_UINT32 * WritePTOffUSSECode(IMG_UINT32 *pui32BufferBase);
+IMG_INTERNAL IMG_UINT32 * WritePTOffUSSECode(IMG_UINT32 *pui32BufferBase);
 
-IMG_UINT32 * WriteEndOfRenderUSSECode(IMG_UINT32 *pui32BufferBase);
+IMG_INTERNAL IMG_UINT32 * WriteEndOfRenderUSSECode(IMG_UINT32 *pui32BufferBase);
 
 
 #endif /* _PIXEVENT_H_ */

@@ -44,7 +44,7 @@ extern "C" {
  */
 
 
-#ifdef __linux__
+#if defined (__linux__)
 
 		#include <linux/ioctl.h>
     /*!< Nov 2006: according to ioctl-number.txt 'g' wasn't in use. */
@@ -53,6 +53,16 @@ extern "C" {
     #define PVRSRV_IOW(INDEX)   _IOW(PVRSRV_IOC_GID, INDEX, PVRSRV_BRIDGE_PACKAGE)
     #define PVRSRV_IOR(INDEX)   _IOR(PVRSRV_IOC_GID, INDEX, PVRSRV_BRIDGE_PACKAGE)
     #define PVRSRV_IOWR(INDEX)  _IOWR(PVRSRV_IOC_GID, INDEX, PVRSRV_BRIDGE_PACKAGE)
+
+#elif defined (__psp2__)
+
+	#define PVRSRV_IOC_GID		0x1000
+	#define PVRSRV_IO(INDEX)    (PVRSRV_IOC_GID + (INDEX))
+	#define PVRSRV_IOW(INDEX)   (PVRSRV_IOC_GID + (INDEX))
+	#define PVRSRV_IOR(INDEX)   (PVRSRV_IOC_GID + (INDEX))
+	#define PVRSRV_IOWR(INDEX)  (PVRSRV_IOC_GID + (INDEX))
+
+	#define PVRSRV_BRIDGE_BASE                  PVRSRV_IOC_GID
 
 #else /* __linux__ */
 
@@ -1718,7 +1728,7 @@ typedef struct PVRSRV_BRIDGE_OUT_GETFREEDEVICEMEM_TAG
 } PVRSRV_BRIDGE_OUT_GETFREEDEVICEMEM;
 
 
-//#ifdef LINUX
+#ifdef LINUX
 /******************************************************************************
  *	'bridge out' get full map data
  *****************************************************************************/
@@ -1758,7 +1768,7 @@ typedef struct PVRSRV_BRIDGE_OUT_RELEASE_MMAP_DATA_TAG
     /* Size of mapping */
     IMG_UINT32			ui32RealByteSize;
 } PVRSRV_BRIDGE_OUT_RELEASE_MMAP_DATA;
-//#endif
+#endif
 
 
 /******************************************************************************
