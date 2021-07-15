@@ -14,6 +14,8 @@ namespace paf {
 	class WString;
 
 	namespace graphics {
+		class DrawQueue;
+		class TextObj;
 		class Texture;
 	}
 
@@ -142,8 +144,8 @@ namespace paf {
 			virtual int unkFun_084();
 			virtual int unkFun_088();
 			virtual int unkFun_08C();
-			virtual int unkFun_090_anim(SceInt32 animationCode, SceBool setSomeFloat);
-			virtual int unkFun_094_animRev(SceInt32 animationCode, SceBool setSomeFloat);
+			virtual int unkFun_090_anim(SceFloat32 a1, SceInt32 animationCode, SceBool setSomeFloat);
+			virtual int unkFun_094_animRev(SceFloat32 a1, SceInt32 animationCode, SceBool setSomeFloat);
 			virtual int unkFun_098();
 			virtual int unkFun_09C();
 			virtual int unkFun_0A0();
@@ -168,9 +170,9 @@ namespace paf {
 			virtual int unkFun_0EC();
 			virtual int unkFun_0F0();
 			virtual int unkFun_0F4();
-			virtual int unkFun_0F8(SceInt32);
-			virtual int unkFun_0FC();
-			virtual int SetTexture(paf::graphics::Texture *tex);
+			virtual graphics::DrawQueue *GetDrawQueue(SceInt32 a1 = 0);
+			virtual int SetTexture(paf::graphics::Texture *tex, SceInt32 childNum, SceInt32 a3 = 0);
+			virtual int SetTextureBase(paf::graphics::Texture *tex);
 			virtual int unkFun_104();
 			virtual int unkFun_108();
 			virtual int unkFun_10C();
@@ -178,11 +180,11 @@ namespace paf {
 			virtual int unkFun_114();
 			virtual SceInt32 SetLabelWithFlag(paf::WString *text, SceInt32 flag);
 			virtual SceInt32 SetLabel(paf::WString *text);
-			virtual int unkFun_120();
-			virtual int unkFun_124();
+			virtual SceInt32 GetLabelWithFlag(paf::WString *text, SceInt32 flag);
+			virtual SceInt32 GetLabel(paf::WString *text);
 			virtual int unkFun_128();
 			virtual int unkFun_12C();
-			virtual int unkFun_130();
+			virtual int unkFun_130(SceInt32);
 			virtual int unkFun_134(SceInt32);
 			virtual int unkFun_138();
 			virtual int unkFun_13C();
@@ -207,7 +209,7 @@ namespace paf {
 			virtual int unkFun_188();
 			virtual int unkFun_18C();
 			virtual int unkFun_190();
-			virtual int unkFun_194();
+			virtual int unkFun_194(SceFloat32 a1, SceFVector4 *a2, SceInt32 a3, SceInt32 a4, SceInt32 a5);
 			virtual int unkFun_198();
 			virtual int unkFun_19C();
 			virtual int unkFun_1A0();
@@ -255,6 +257,8 @@ namespace paf {
 			static char *TypeSlidingDrawer();
 
 			static char *TypeScrollViewParent();
+
+			static char *TypeScrollView();
 
 			static char *TypeScrollBar2D();
 
@@ -326,17 +330,37 @@ namespace paf {
 
 			SceInt32 SetAdjust(SceBool x, SceBool y, SceBool z);
 
+			SceVoid SetGraphicsDisabled(SceBool disable);
+
+			enum EventCtrl
+			{
+				EventCtrl_ButtonPress = 0x10001,
+				EventCtrl_ButtonRelease = 0x10002,
+				EventCtrl_ButtonHold = 0x10003
+			};
+
+			enum EventFocus
+			{
+				EventFocus_On = 0x40001,
+				EventFocus_Off = 0x40002
+			};
+
+			enum EventMain
+			{
+				EventMain_Pressed = 0x10000008
+			};
+
 			SceInt32 RegisterEventCallback(SceInt32 eventId, EventCallback *cb, SceBool a3);
 
 			SceInt32 UnregisterEventCallback(SceInt32 eventId, SceInt32 a2, SceInt32 a3);
 
-			SceInt32 RegisterLoopEventCallback(SceInt32 eventId, EventCallback *cb);
+			SceInt32 RegisterFwEventCallback(SceFloat32 delay, SceInt32 eventId, EventCallback *cb);
 
-			SceInt32 UnregisterLoopEventCallback(SceInt32 eventId);
+			SceInt32 UnregisterFwEventCallback(SceInt32 eventId);
 
 			SceInt32 AssignButton(SceUInt32 buttons);
 
-			SceInt32 SetDimFactor(SceFloat32 factor, SceInt32 a2 = 0, SceInt32 a3 = 0x10003, SceInt32 a4 = 0, SceInt32 a5 = 0, SceInt32 a6 = 0);
+			SceInt32 SetAlpha(SceFloat32 alpha, SceInt32 a2 = 0, SceInt32 a3 = 0x10003, SceInt32 a4 = 0, SceInt32 a5 = 0, SceInt32 a6 = 0);
 
 			SceVoid Disable(SceBool a1);
 
@@ -390,11 +414,19 @@ namespace paf {
 
 			};
 
-			SceInt32 PlayAnimation(Animation animId, EventCallback::EventHandler animCB = 0, ScePVoid pUserData = SCE_NULL);
+			SceInt32 PlayAnimation(SceFloat32 animationSpeed, Animation animId, EventCallback::EventHandler animCB = 0, ScePVoid pUserData = SCE_NULL);
 
-			SceInt32 PlayAnimationReverse(Animation animId, EventCallback::EventHandler animCB = 0, ScePVoid pUserData = SCE_NULL);
+			SceInt32 PlayAnimationReverse(SceFloat32 animationSpeed, Animation animId, EventCallback::EventHandler animCB = 0, ScePVoid pUserData = SCE_NULL);
 
-			SceUChar8 unk_004[0x148];
+			SceUChar8 unk_004[0x5D];
+
+			SceUInt8 unk_061;
+
+			SceUChar8 unk_062[0x74];
+
+			SceUInt8 unk_0D6;
+
+			SceUChar8 unk_0D7[0x75];
 
 			SceUInt32 hash;
 
@@ -406,15 +438,23 @@ namespace paf {
 
 			SceUInt8 animationStatus;
 
-			SceUChar8 unk_197[0xF5];
+			SceUChar8 unk_197[0xE9];
+
+			graphics::TextObj *textObj;
+
+			SceUChar8 unk_284[0x8];
 
 			Color *pDisabledColor;
 
-			SceUChar8 unk_290[0x5];
+			SceUInt32 unk_290;
+
+			SceUChar8 unk_294[0x1];
 
 		private:
 
 		};
+
+		static int a = sizeof(Widget);
 
 		class BusyIndicator : public Widget
 		{
@@ -443,9 +483,11 @@ namespace paf {
 
 			virtual ~Text();
 
+			SceUInt32 unk_298;
+
 		private:
 
-			SceUChar8 unk_298[0x40];
+			SceUChar8 unk_29C[0x3C];
 		};
 
 		class TextBox : public Widget
@@ -575,6 +617,67 @@ namespace paf {
 			virtual ~ScrollViewParent();
 		};
 
+		class ScrollView : public Widget
+		{
+		public:
+
+			ScrollView(Widget *parent, SceInt32 a2);
+
+			virtual ~ScrollView();
+
+			virtual int unkFun_1AC();
+			virtual int unkFun_1B0();
+			virtual int unkFun_1B4();
+			virtual int unkFun_1B8();
+			virtual int unkFun_1BC();
+			virtual int unkFun_1C0();
+			virtual int unkFun_1C4();
+			virtual int unkFun_1C8();
+			virtual int unkFun_1CC();
+			virtual int unkFun_1D0();
+			virtual int unkFun_1D4();
+			virtual int unkFun_1D8();
+			virtual int unkFun_1DC();
+			virtual int unkFun_1E0();
+			virtual int unkFun_1E4();
+			virtual int unkFun_1E8();
+			virtual int unkFun_1EC();
+			virtual int unkFun_1F0();
+			virtual int unkFun_1F4();
+			virtual int unkFun_1F8();
+			virtual int unkFun_1FC();
+			virtual int unkFun_200();
+			virtual int unkFun_204();
+			virtual int unkFun_208();
+			virtual int unkFun_20C();
+			virtual int unkFun_210();
+			virtual int unkFun_214();
+			virtual int unkFun_218();
+			virtual int unkFun_21C();
+			virtual int unkFun_220();
+			virtual int unkFun_224();
+			virtual int unkFun_228();
+			virtual int unkFun_22C(SceInt32 a2);
+			virtual int unkFun_230();
+			virtual int unkFun_234();
+			virtual int unkFun_238();
+			virtual int unkFun_23C();
+			virtual int unkFun_240(SceFVector4 *a1, SceInt32 a2);
+			virtual int unkFun_244();
+			virtual int unkFun_248(SceInt32 a1);
+			virtual int unkFun_24C(SceInt32 a1);
+			virtual int unkFun_250();
+			virtual int unkFun_254(SceUInt64 *a1, SceInt32 a2, SceInt32 a3, SceInt32 a4);
+			virtual int unkFun_258(SceInt32 a1);
+			virtual int unkFun_25C();
+			virtual int unkFun_260(SceFVector4 *a1, SceInt32 a2);
+			virtual int unkFun_264();
+			virtual int unkFun_268();
+			virtual int unkFun_26C();
+			virtual int unkFun_270();
+			virtual int unkFun_274(SceInt32 a1);
+		};
+
 		class ScrollBar2D : public Widget
 		{
 		public:
@@ -636,6 +739,36 @@ namespace paf {
 			ProgressBar(Widget *parent, SceInt32 a2);
 
 			virtual ~ProgressBar();
+
+			virtual int unkFun_1AC();
+			virtual int unkFun_1B0();
+			virtual int unkFun_1B4();
+			virtual int unkFun_1B8();
+			virtual int unkFun_1BC();
+			virtual int unkFun_1C0();
+			virtual int unkFun_1C4();
+			virtual int unkFun_1C8();
+			virtual int unkFun_1CC();
+			virtual int unkFun_1D0();
+			virtual int unkFun_1D4();
+			virtual int unkFun_1D8();
+			virtual int unkFun_1DC();
+			virtual int unkFun_1E0();
+			virtual int unkFun_1E4();
+			virtual int SetProgress(SceFloat32 value, SceUInt32 a2, SceUInt32 a3);
+			virtual int unkFun_1EC();
+			virtual int unkFun_1F0();
+			virtual int unkFun_1F4();
+			virtual int unkFun_1F8();
+			virtual int unkFun_1FC();
+			virtual int unkFun_200();
+
+			SceUChar8 unk_295[0x7];
+
+			SceFloat32 fullValue;
+			SceFloat32 unk_2A0;
+			SceFloat32 currentValue;
+
 		};
 
 		class ProgressBarTouch : public Widget
@@ -645,6 +778,35 @@ namespace paf {
 			ProgressBarTouch(Widget *parent, SceInt32 a2);
 
 			virtual ~ProgressBarTouch();
+
+			virtual int unkFun_1AC();
+			virtual int unkFun_1B0();
+			virtual int unkFun_1B4();
+			virtual int unkFun_1B8();
+			virtual int unkFun_1BC();
+			virtual int unkFun_1C0();
+			virtual int unkFun_1C4();
+			virtual int unkFun_1C8();
+			virtual int unkFun_1CC(SceInt32 a1);
+			virtual int unkFun_1D0();
+			virtual int unkFun_1D4();
+			virtual int unkFun_1D8();
+			virtual int unkFun_1DC();
+			virtual int unkFun_1E0();
+			virtual int unkFun_1E4();
+			virtual int SetProgress(SceFloat32 value, SceUInt32 a2, SceUInt32 a3);
+			virtual int unkFun_1EC();
+			virtual int unkFun_1F0();
+			virtual int unkFun_1F4();
+			virtual int unkFun_1F8();
+			virtual int unkFun_1FC();
+			virtual int unkFun_200();
+
+			SceUChar8 unk_295[0x7];
+
+			SceFloat32 fullValue;
+			SceFloat32 unk_2A0;
+			SceFloat32 currentValue;
 		};
 
 		class ListItem : public Widget //0x2d0

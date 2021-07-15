@@ -234,8 +234,7 @@ namespace paf {
 
 		};
 
-		//Not usable yet
-		/*class JobQueue
+		class JobQueue
 		{
 		public:
 
@@ -293,11 +292,17 @@ namespace paf {
 
 			private:
 
-				SceUChar8 m_work[0x24];
+				SceUChar8 m_work[0x14];
 
 			};
 
-			typedef void(*QueueEntryFunction)(void *pArgBlock);
+			class ItemParam
+			{
+			public:
+
+				Item *item;
+				Request *request;
+			};
 
 			JobQueue(const char *pName, Opt *opt = SCE_NULL);
 
@@ -309,7 +314,7 @@ namespace paf {
 
 			static SceVoid DeleteDefaultJobQueue();
 
-			SceInt32 Push(Item *queueItem);
+			SceInt32 Push(ItemParam *queueItemParam);
 
 			SceVoid Join();
 
@@ -317,15 +322,15 @@ namespace paf {
 
 			SceVoid ChangeWorkerPriority(SceInt32 priority);
 
-			SceVoid Execute();
+			SceVoid Finish();
 
-			SceVoid Execute2();
+			SceVoid Execute();
 
 		private:
 
 			SceUChar8 m_work[0x2C];
 
-		};*/
+		};
 	}
 }
 

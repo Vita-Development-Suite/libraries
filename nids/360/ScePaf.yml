@@ -5,6 +5,8 @@ modules:
       ScePafCommon:
         nid: 0x3C1965CD
         functions:
+          _ZN3paf6String13MemsizeFormatEj: 0xF7FEB001
+          _ZN3paf6String4SetfEPKcz: 0x87D6E910
           _ZN3paf6String9ToWStringEPKcPNS_7WStringE: 0x950C3AA0
           _ZN3paf6String9ToWStringEPKcPNS_7WStringEj: 0xA9ED25D9
           _ZN3paf6String9ToWStringEPNS_7WStringE: 0x3CFEB1EB
@@ -17,19 +19,31 @@ modules:
           _ZN3paf6StringC2EPKcj: 0x1F1C3F8D
           _ZN3paf6StringC2EPS0_: 0xCC229501
           _ZN3paf6StringC2Ev: 0x50C5FA24
-          _ZN3paf6common21WidgetStateTransitionEfPNS_6widget6WidgetEjii: 0xB48C9BDC
-          _ZN3paf6common28WidgetStateTransitionReverseEfPNS_6widget6WidgetEjii: 0x6CF3A3C8
           _ZN3paf6common5Utils17AddMainThreadTaskEPFvPvES2_: 0x6735B503
           _ZN3paf6common5Utils20RemoveMainThreadTaskEPFvPvES2_: 0x4A8115D5
+          _ZN3paf6common5Utils21WidgetStateTransitionEfPNS_6widget6WidgetEjii: 0xB48C9BDC
+          _ZN3paf6common5Utils28WidgetStateTransitionReverseEfPNS_6widget6WidgetEjii: 0x6CF3A3C8
           _ZN3paf7WString8ToStringEPKtPNS_6StringE: 0x8E009780
           _ZN3paf7WString8ToStringEPKtPNS_6StringEj: 0x5FAAAE1C
           _ZN3paf7WString8ToStringEPNS_6StringE: 0x06C015C6
           _ZN3paf7WString8ToStringEPNS_6StringEj: 0x683BC8E8
+          _ZN3paf8SWStringC1EPKc: 0x4107391F
+          _ZN3paf8SWStringC1EPKt: 0x5DF278C9
+          _ZN3paf8SWStringC1EPNS_6StringE: 0x5AB8BCDE
+          _ZN3paf8SWStringC1EPNS_7WStringE: 0x9C4ABDBE
+          _ZN3paf8SWStringC1Ev: 0x298D25EE
+          _ZN3paf8SWStringC2EPKc: 0xE23D7BA7
+          _ZN3paf8SWStringC2EPKt: 0xDB4B2313
+          _ZN3paf8SWStringC2EPNS_6StringE: 0xCE934628
+          _ZN3paf8SWStringC2EPNS_7WStringE: 0x7607A514
+          _ZN3paf8SWStringC2Ev: 0xD9F31F44
+          _ZN3paf8SWStringD1Ev: 0x96777934
+          _ZN3paf8SWStringD2Ev: 0xE2544213
       ScePafGraphics:
         nid: 0xA070D6A7
         functions:
-          _ZN3paf8graphics10MemoryPool12FreeMemBlockEjPv: 0x167F6801
-          _ZN3paf8graphics10MemoryPool13AllocMemBlockEjjPKcPv: 0xBBE8F063
+          _ZN3paf8graphics10MemoryPool12FreeMemBlockENS1_10MemoryTypeEPv: 0x167F6801
+          _ZN3paf8graphics10MemoryPool13AllocMemBlockENS1_10MemoryTypeEjPKcPv: 0xBBE8F063
           _ZN3paf8graphics10MemoryPool20GetDefaultMemoryPoolEv: 0xCDE30B64
           _ZN3paf8graphics10MemoryPoolC1EPNS1_9InitParamE: 0x6A986ED3
           _ZN3paf8graphics10MemoryPoolC1EPvjPKcPNS_9Allocator3OptEj: 0xEEC40427
@@ -38,65 +52,150 @@ modules:
           _ZN3paf8graphics10MemoryPoolD0Ev: 0x1697139C
           _ZN3paf8graphics10MemoryPoolD1Ev: 0x2FBA10B9
           _ZN3paf8graphics10MemoryPoolD2Ev: 0x2B1159EC
+          _ZN3paf8graphics17FwGraphicsContext20GetFwGraphicsContextEv: 0x6C448991
+          _ZN3paf8graphics7Surface7GetLockEv: 0x29FC820B
           _ZN3paf8graphics7SurfaceC1EPNS0_10MemoryPoolEjjjjiji: 0x7C8B2A63
           _ZN3paf8graphics7SurfaceD0Ev: 0x58D2FEF6
           _ZN3paf8graphics7SurfaceD1Ev: 0x767D7A4D
           _ZN3paf8graphics7SurfaceD2Ev: 0xF1EE942C
           _ZN3paf8graphics7SurfacedlEPv: 0x9FAF51CF
           _ZN3paf8graphics7SurfacenwEj: 0x6EA3E8FF
+          _ZN3paf8graphics7TextObj16GetDataAndLengthEPPtPj: 0x67094D42
+          _ZN3paf8graphics7TextObj9GetLengthEPj: 0x3B798744
+          _ZN3paf8graphics7TextObjD1Ev: 0x919B8983
+          _ZN3paf8graphics7Texture14CreateFromFileEPS1_PNS0_10MemoryPoolEPNS_4Misc10OpenResultEPv: 0xB228A257
+          _ZN3paf8graphics7Texture16CreateFromMemoryEPS1_PNS0_10MemoryPoolEPvijiS5_: 0x476AB004
+          _ZN3paf8graphics9DrawQueue10SetDrawJobEPNS1_9ItemParamE: 0x0F6790DB
+      ScePafLowlayer:
+        nid: 0x2342266A
+        functions:
+          _ZN3paf8lowlayer5Deflt10DecompressEPvjS2_PKS2_: 0xD7DAA151
       ScePafMisc:
         nid: 0x3D643CE8
         functions:
-          _ZN3paf2io10MkdirMultiEPKci: 0xFDCD1121
-          _ZN3paf2io10MkdirRWSYSEPKc: 0x198A4C81
-          _ZN3paf2io15MkdirMultiRWSYSEPKc: 0xE39FA610
-          _ZN3paf2io15RemoveRecursiveEPKc: 0xDFF0CA06
-          _ZN3paf2io18SetDefaultPriorityEj: 0xA283AD47
-          _ZN3paf2io3Dir4OpenEPiPKc: 0x95F2C107
+          _ZN3paf2io3Dir4OpenEPKc: 0x95F2C107
           _ZN3paf2io3Dir4ReadEPNS1_6DirentE: 0xA4F553B0
-          _ZN3paf2io3Dir5CloseEPi: 0x2E8E9CBB
+          _ZN3paf2io3Dir5CloseEv: 0x2E8E9CBB
           _ZN3paf2io4File10CloseAsyncEv: 0xE1624D8E
-          _ZN3paf2io4File10LseekAsyncEiiP15SceIoAsyncParam: 0x69798A47
+          _ZN3paf2io4File10LseekAsyncExiP15SceIoAsyncParam: 0x69798A47
           _ZN3paf2io4File10WriteAsyncEPKvj: 0x604D3C31
           _ZN3paf2io4File11CancelAsyncEv: 0x00AB4F34
           _ZN3paf2io4File11SetPriorityEj: 0x619FA110
+          _ZN3paf2io4File18SetDefaultPriorityEj: 0xA283AD47
           _ZN3paf2io4File4OpenEPKcii: 0x9DD7B62D
           _ZN3paf2io4File4ReadEPvj: 0x999CDF39
           _ZN3paf2io4File4SyncEv: 0x61B3C8C6
           _ZN3paf2io4File5CloseEv: 0x757CC8B1
-          _ZN3paf2io4File5LseekExi: 0x38D851FF
+          _ZN3paf2io4File5LseekExiP15SceIoAsyncParam: 0x38D851FF
           _ZN3paf2io4File5WriteEPKvj: 0x132F4E2C
+          _ZN3paf2io4File6RemoveEPKc: 0xB18C734D
+          _ZN3paf2io4File6RenameEPKcPKc: 0x05C19D34
+          _ZN3paf2io4File7GetSizeEPKc: 0xAC689344
           _ZN3paf2io4File7GetSizeEv: 0x3AB24248
-          _ZN3paf2io4File7GetStatEPv: 0x223EAD7D
+          _ZN3paf2io4File7GetStatEP9SceIoStat: 0x223EAD7D
           _ZN3paf2io4File9OpenAsyncEPKcii: 0xBDE466D2
           _ZN3paf2io4File9PollAsyncEPNS1_11AsyncResultE: 0xEE7027E7
           _ZN3paf2io4File9ReadAsyncEPvj: 0xC6220CE0
           _ZN3paf2io4File9SyncAsyncEv: 0xF626DC7D
-          _ZN3paf2io4File9WaitAsyncEPNS1_11AsyncResultE: 0x7486256D
+          _ZN3paf2io4File9WaitAsyncEPNS0_11AsyncResultE: 0x7486256D
           _ZN3paf2io4FileC1Ev: 0xE73FE3E5
           _ZN3paf2io4FileC2Ev: 0xA495CC6B
           _ZN3paf2io4FileD0Ev: 0xDF3A09D4
           _ZN3paf2io4FileD1Ev: 0xEEDD1701
           _ZN3paf2io4FileD2Ev: 0xA47418DF
-          _ZN3paf2io5IsDirEPKc: 0xB002E56C
-          _ZN3paf2io5MkdirEPKci: 0x53EAF163
-          _ZN3paf2io6ExistsEPKc: 0x95F14046
-          _ZN3paf2io6RemoveEPKc: 0x40573275
+          _ZN3paf2io4Misc10MkdirRWSYSEPKc: 0x198A4C81
+          _ZN3paf2io4Misc15CreateRecursiveEPKci: 0xFDCD1121
+          _ZN3paf2io4Misc15RemoveRecursiveEPKc: 0xDFF0CA06
+          _ZN3paf2io4Misc18SetDefaultPriorityEj: 0xB1E2960A
+          _ZN3paf2io4Misc20CreateRecursiveRWSYSEPKc: 0xE39FA610
+          _ZN3paf2io4Misc5IsDirEPKc: 0xB002E56C
+          _ZN3paf2io4Misc5MkdirEPKci: 0x53EAF163
+          _ZN3paf2io4Misc6ExistsEPKc: 0x95F14046
+          _ZN3paf2io4Misc6RemoveEPKc: 0xC8CA2008
+          _ZN3paf2io4Misc6RenameEPKcPKc: 0x1702CD72
+          _ZN3paf2io4Misc7GetSizeEPKc: 0x1F37F8DA
+          _ZN3paf2io4Misc9RemoveAnyEPKc: 0x40573275
+          _ZN3paf2io4Stat11IsFileOrDirEPKc: 0xEBEC6951
+          _ZN3paf2io4Stat5IsDirEPKc: 0x8C97C54C
+          _ZN3paf2io4Stat6IsFileEPKc: 0x2EAB756A
+          _ZN3paf2io4Stat7GetStatEPKcPS1_: 0x2E402A5C
+          _ZN3paf4Http6SetUnkEii: 0xED1839C2
+          _ZN3paf4Http6SetUrlEPKc: 0xDE80BFD9
+          _ZN3paf4Http6SetUrlEPNS_6StringE: 0xD6D82FF9
+          _ZN3paf4HttpC1Ev: 0x37A4ADA9
+          _ZN3paf4HttpC2Ev: 0xF8213E1C
+          _ZN3paf4Misc13OpenMemDirectEPNS0_10OpenResultEPvj: 0xDEB7A1CF
+          _ZN3paf4Misc16ResumeTouchInputEj: 0x15613EA2
+          _ZN3paf4Misc17SuspendTouchInputEj: 0x0D4B4B67
+          _ZN3paf4Misc7IsDolceEv: 0xAF4FC3F4
+          _ZN3paf4Misc7OpenMemEPNS0_10OpenResultEPvjPi: 0x19FE55A8
+          _ZN3paf4Misc7OpenMemEPNS0_10OpenResultES2_Pi: 0x502E1BB0
+          _ZN3paf4Misc8OpenFileEPNS0_10OpenResultEPKciiPi: 0xB9FB9BD6
+          _ZN3paf4Misc8OpenHttpEPNS0_10OpenResultEPKcPii: 0xA9958563
+          _ZN3paf4Misc8OpenHttpEPNS0_10OpenResultEPKtPii: 0x5888F3EC
           _ZN3paf4Sha111BlockResultEPh: 0xB3BF59FC
           _ZN3paf4Sha111BlockUpdateEPvj: 0xE6BB459E
           _ZN3paf4Sha1C1Ev: 0xB38C53C0
           _ZN3paf5Image12GetLastErrorEv: 0xE9A4171E
           _ZN3paf5Image12SetLastErrorEi: 0x951B7B59
+          _ZN3paf5Image13GetResolutionEPNS0_10ResolutionEPS0_: 0xEBEBC3F0
           _ZN3paf5Image18GetPaletteColorNumEv: 0x9ADD8A26
-          _ZN3paf5Image4LoadEPNS0_6ResultEPKcPviiii: 0xFAA808C2
+          _ZN3paf5Image4LoadEPNS0_10LoadResultEPKcPviiii: 0xFAA808C2
           _ZN3paf5Image7GetTypeEv: 0xBF87C099
           _ZN3paf6ModuleC1EPKciji: 0xB3B5DF38
           _ZN3paf6ModuleC2EPKciji: 0xF297D14C
           _ZN3paf6ModuleD1Ev: 0x7C86911E
           _ZN3paf6ModuleD2Ev: 0xAFD2590E
           _ZN3paf6String16WCharToNewStringEPKtPS0_: 0xE690F751
-          _ZN3paf7IsDolceEv: 0xAF4FC3F4
+          _ZN3paf7MemFile10CloseAsyncEv: 0x807CCDB4
+          _ZN3paf7MemFile10LseekAsyncExiP15SceIoAsyncParam: 0x7BED7D7F
+          _ZN3paf7MemFile10WriteAsyncEPKvj: 0x494E8CF8
+          _ZN3paf7MemFile11CancelAsyncEv: 0xE3F118A8
+          _ZN3paf7MemFile4OpenEPKcii: 0xC4875233
+          _ZN3paf7MemFile4ReadEPvj: 0x871AFA61
+          _ZN3paf7MemFile4SyncEv: 0x4FBD37E4
+          _ZN3paf7MemFile5CloseEv: 0x4E981745
+          _ZN3paf7MemFile5LseekExiP15SceIoAsyncParam: 0xEF7C46F1
+          _ZN3paf7MemFile5WriteEPKvj: 0xA7756292
+          _ZN3paf7MemFile7GetSizeEv: 0x6784C895
+          _ZN3paf7MemFile7GetTypeEv: 0x4BB2B084
+          _ZN3paf7MemFile8IsOpenedEv: 0x5C9FFE3E
+          _ZN3paf7MemFile9OpenAsyncEPKcii: 0xF2A15807
+          _ZN3paf7MemFile9PollAsyncEPNS1_11AsyncResultE: 0x564A5CA7
+          _ZN3paf7MemFile9ReadAsyncEPvj: 0x44FE3320
+          _ZN3paf7MemFile9SyncAsyncEv: 0x964C67E5
+          _ZN3paf7MemFile9WaitAsyncEPNS1_11AsyncResultE: 0x4B8F8811
+          _ZN3paf7MemFileC1Ev: 0x995435F4
+          _ZN3paf7MemFileC2Ev: 0x19BD0EAB
+          _ZN3paf7MemFileD0Ev: 0x71148CB2
+          _ZN3paf7MemFileD1Ev: 0x8AF3CC45
+          _ZN3paf7MemFileD2Ev: 0xF4D60C5C
           _ZN3paf7WString16CharToNewWStringEPKcPS0_: 0xA6ABC0B2
+          _ZN3paf8HttpFile10CloseAsyncEv: 0xCE4DFAD1
+          _ZN3paf8HttpFile10LseekAsyncExiP15SceIoAsyncParam: 0xCD9CCF7F
+          _ZN3paf8HttpFile10WriteAsyncEPKvj: 0x341895C8
+          _ZN3paf8HttpFile11CancelAsyncEv: 0x39910437
+          _ZN3paf8HttpFile4OpenEPNS_4HttpE: 0xD2221E7B
+          _ZN3paf8HttpFile4ReadEPvj: 0xFD8D09E7
+          _ZN3paf8HttpFile4SyncEv: 0x9FE47AA4
+          _ZN3paf8HttpFile5CloseEv: 0x0286E577
+          _ZN3paf8HttpFile5LseekExiP15SceIoAsyncParam: 0x8536F0EB
+          _ZN3paf8HttpFile5WriteEPKvj: 0x47834F0F
+          _ZN3paf8HttpFile7GetSizeEv: 0xB06C6A6B
+          _ZN3paf8HttpFile7GetStatEP9SceIoStat: 0xA004D31D
+          _ZN3paf8HttpFile7GetStatEPKcP9SceIoStat: 0x5155B290
+          _ZN3paf8HttpFile7GetTypeEv: 0x065AF035
+          _ZN3paf8HttpFile8IsOpenedEv: 0x657B46A1
+          _ZN3paf8HttpFile9OpenAsyncEPNS_4HttpE: 0x878D108C
+          _ZN3paf8HttpFile9PollAsyncEPNS1_11AsyncResultE: 0xD5543A0D
+          _ZN3paf8HttpFile9ReadAsyncEPvj: 0x1B7C42FA
+          _ZN3paf8HttpFile9SyncAsyncEv: 0x84E88034
+          _ZN3paf8HttpFile9WaitAsyncEPNS1_11AsyncResultE: 0x7B2F4627
+          _ZN3paf8HttpFileC1Ev: 0x541FFC11
+          _ZN3paf8HttpFileC2Ev: 0x444C9C53
+          _ZN3paf8HttpFileD0Ev: 0x13E9B54C
+          _ZN3paf8HttpFileD1Ev: 0x967C0019
+          _ZN3paf8HttpFileD2Ev: 0xE93C0EBB
           _ZN3paf8datetime8DateTime10IsLeapYearEi: 0xA6178A4C
           _ZN3paf8datetime8DateTime11SetFromTickEP10SceRtcTick: 0x6EC994D7
           _ZN3paf8datetime8DateTime12ParseRFC3339EP10SceRtcTickPKc: 0xE4516D60
@@ -120,15 +219,44 @@ modules:
           _ZN3paf8datetime8DateTimeD1Ev: 0x2DBDFC13
           _ZN3paf8datetime8DateTimeltEPKS1_: 0x17B87641
           _ZN3paf9Allocator10DeallocateEPv: 0xCE97B579
+          _ZN3paf9Allocator11GetFreeSizeEv: 0xC32ECD73
+          _ZN3paf9Allocator12IsCdlgMemoryEv: 0xD9E9BEC8
           _ZN3paf9Allocator15AllocateAlignedEjj: 0x04716F15
-          _ZN3paf9Allocator15GetMemBlockBaseEPPvS3_: 0x9A80FBC3
-          _ZN3paf9Allocator7GetSizeEv: 0x7270DC05
+          _ZN3paf9Allocator7GetInfoEPPvj: 0xD4358B8E
+          _ZN3paf9Allocator7GetNameEv: 0x68B7420B
           _ZN3paf9Allocator8AllocateEj: 0x89A1CE78
           _ZN3paf9AllocatorC1EPPvjPKcPNS1_3OptE: 0xA2B0BF4D
           _ZN3paf9AllocatorC2EPPvjPKcPNS1_3OptE: 0xF36F1C66
           _ZN3paf9AllocatorD0Ev: 0x79F13D72
           _ZN3paf9AllocatorD1Ev: 0x25238A3A
           _ZN3paf9AllocatorD2Ev: 0x4A434F81
+          _ZN3paf9LocalFile10CloseAsyncEv: 0xF035266A
+          _ZN3paf9LocalFile10LseekAsyncExiP15SceIoAsyncParam: 0xCE5848E1
+          _ZN3paf9LocalFile10WriteAsyncEPKvj: 0x79277F10
+          _ZN3paf9LocalFile11CancelAsyncEv: 0xD184BC69
+          _ZN3paf9LocalFile11SetPriorityEj: 0x718411BE
+          _ZN3paf9LocalFile4OpenEPKcii: 0x499F4FAA
+          _ZN3paf9LocalFile4ReadEPvj: 0xBD49E2B3
+          _ZN3paf9LocalFile4SyncEv: 0x4A447655
+          _ZN3paf9LocalFile5CloseEv: 0x00383A45
+          _ZN3paf9LocalFile5LseekExiP15SceIoAsyncParam: 0x99AAA9F7
+          _ZN3paf9LocalFile5WriteEPKvj: 0x5A26025A
+          _ZN3paf9LocalFile7GetSizeEv: 0xAF6A9878
+          _ZN3paf9LocalFile7GetStatEP9SceIoStat: 0x5BEF2351
+          _ZN3paf9LocalFile7GetTypeEv: 0x7D13C35B
+          _ZN3paf9LocalFile8IsOpenedEv: 0x74D9B6F4
+          _ZN3paf9LocalFile9OpenAsyncEPKcii: 0x20F863FD
+          _ZN3paf9LocalFile9PollAsyncEPNS1_11AsyncResultE: 0x3636127A
+          _ZN3paf9LocalFile9ReadAsyncEPvj: 0x0CD740C5
+          _ZN3paf9LocalFile9SyncAsyncEv: 0x439847D5
+          _ZN3paf9LocalFile9WaitAsyncEPNS1_11AsyncResultE: 0x01A03F2E
+          _ZN3paf9LocalFileC1EPNS_9AllocatorE: 0xBEDFC256
+          _ZN3paf9LocalFileC1Ev: 0xDFE98F6E
+          _ZN3paf9LocalFileC2EPNS_9AllocatorE: 0xD2DB93D0
+          _ZN3paf9LocalFileC2Ev: 0x20ACD611
+          _ZN3paf9LocalFileD0Ev: 0xF42CA10F
+          _ZN3paf9LocalFileD1Ev: 0x932FCF17
+          _ZN3paf9LocalFileD2Ev: 0x71A0A754
           scePafMiscInitializeInputMethodExt: 0xAC108E50
       ScePafResource:
         nid: 0x2836DC9B
@@ -286,6 +414,9 @@ modules:
           sce_paf_wmemcpy: 0x19B5B91D
           sce_paf_wmemmove: 0x468A09B1
           sce_paf_wmemset: 0x36890967
+        variables:
+          _ZN3paf6String4nullE: 0x610F2F91
+          _ZN3paf7WString4nullE: 0xB4A712A7
       ScePafThread:
         nid: 0x54276D19
         functions:
@@ -341,6 +472,8 @@ modules:
           _ZN3paf6thread6Thread16GetMainThreadUIDEi: 0xC6F80BB3
           _ZN3paf6thread6Thread16SetMainThreadUIDEi: 0xFE2DC4FE
           _ZN3paf6thread6Thread19InternalThreadEntryEjPv: 0x918D89FC
+          _ZN3paf6thread6Thread3OptC1Ev: 0x5712350E
+          _ZN3paf6thread6Thread3OptC2Ev: 0xCC65DF88
           _ZN3paf6thread6Thread4JoinEv: 0xC5F24067
           _ZN3paf6thread6Thread4SelfEv: 0x7E669E6E
           _ZN3paf6thread6Thread5SleepEj: 0x651F4F81
@@ -363,10 +496,10 @@ modules:
           _ZN3paf6thread8JobQueue4ItemD1Ev: 0x88DA7B11
           _ZN3paf6thread8JobQueue4ItemD2Ev: 0xE639D331
           _ZN3paf6thread8JobQueue4JoinEv: 0x789B263C
-          _ZN3paf6thread8JobQueue4PushEPNS1_4ItemE: 0x93F7A9D6
-          _ZN3paf6thread8JobQueue7ExecuteEv: 0x88061E60
+          _ZN3paf6thread8JobQueue4PushEPNS1_9ItemParamE: 0x93F7A9D6
+          _ZN3paf6thread8JobQueue6FinishEv: 0x88061E60
+          _ZN3paf6thread8JobQueue7ExecuteEv: 0x90A23616
           _ZN3paf6thread8JobQueue7GetSizeEv: 0xA59ABB3B
-          _ZN3paf6thread8JobQueue8Execute2Ev: 0x90A23616
           _ZN3paf6thread8JobQueueC1EPKcPNS1_3OptE: 0xEEDBA99E
           _ZN3paf6thread8JobQueueC2EPKcPNS1_3OptE: 0x7A98D9E5
           _ZN3paf6thread8JobQueueD1Ev: 0x1ABA2C42
@@ -377,8 +510,6 @@ modules:
           _ZN3paf6thread8SyncCallC2EPKc: 0x94138DD2
           _ZN3paf6thread8SyncCallD1Ev: 0xF17CAAB0
           _ZN3paf6thread8SyncCallD2Ev: 0xA8DB7042
-          _ZN3paf6thread9ThreadOptC1Ev: 0x5712350E
-          _ZN3paf6thread9ThreadOptC2Ev: 0xCC65DF88
         variables:
           _ZN3paf6thread5Queue17s_mainThreadQueueE: 0x83CE85DD
           _ZN3paf6thread8JobQueue17s_defaultJobQueueE: 0x83970927
@@ -386,16 +517,20 @@ modules:
       ScePafToplevel:
         nid: 0x4D9A9DD0
         functions:
-          _ZN3paf6Plugin13SetRootWidgetEPNS_8Resource7ElementEPNS0_19RootWidgetInitParamE: 0x30B442D9
+          _ZN3paf6Plugin11CreateSceneEPNS_8Resource7ElementEPNS0_14SceneInitParamE: 0x30B442D9
+          _ZN3paf6Plugin11LoadTextureEPNS_8graphics7TextureEPS0_PNS_8Resource7ElementE: 0x38FFFE8E
+          _ZN3paf6Plugin14GetSceneByHashEPNS_8Resource7ElementE: 0xE1DC7DF5
+          _ZN3paf6Plugin14GetWidgetByNumEj: 0x1DF2C6FD
+          _ZN3paf6Plugin14SceneInitParamC1Ev: 0x34FE1331
           _ZN3paf6Plugin17TemplateInitParamC1Ev: 0x99300D8B
-          _ZN3paf6Plugin19GetRootWidgetByHashEPNS_8Resource7ElementE: 0xE1DC7DF5
-          _ZN3paf6Plugin19RootWidgetInitParamC1Ev: 0x34FE1331
           _ZN3paf6Plugin21AddWidgetFromTemplateEPNS_6widget6WidgetEPNS_8Resource7ElementEPNS0_17TemplateInitParamE: 0xAB0DB9B0
+          _ZN3paf6Plugin21CreateWidgetWithStyleEPNS_6widget6WidgetEPKcPNS_8Resource7ElementES8_: 0x923F763A
           _ZN3paf6Plugin9GetByNameEPKc: 0x004D98CC
+          _ZN3paf6Plugin9GetStringEPNS_8Resource7ElementE: 0x19CEFDA7
           _ZN3paf9Framework10LoadPluginEPNS0_15PluginInitParamEPFvPNS_6PluginEES6_: 0xBE479650
+          _ZN3paf9Framework11GetCRStringEPNS_8Resource7ElementE: 0x85A057E3
           _ZN3paf9Framework11GetInstanceEv: 0xF72FC59E
-          _ZN3paf9Framework11LoadTextureEPNS_8graphics7TextureEPS0_PNS_8Resource7ElementE: 0x7191797C
-          _ZN3paf9Framework13GetRootWidgetEv: 0x2FB738A8
+          _ZN3paf9Framework15GetCurrentSceneEv: 0x2FB738A8
           _ZN3paf9Framework15LoadPluginAsyncEPNS0_15PluginInitParamEPFvPNS_6PluginEES6_: 0xF702E40A
           _ZN3paf9Framework15PluginInitParamC1Ev: 0x400F84CE
           _ZN3paf9Framework15PluginInitParamC2Ev: 0x58C1A580
@@ -409,8 +544,10 @@ modules:
           _ZN3paf9Framework21GetFwLangBySystemLangEj: 0x1AEDE4E0
           _ZN3paf9Framework23CommonResourceInitParamC1Ev: 0x7C8CF5E8
           _ZN3paf9Framework23CommonResourceInitParamC2Ev: 0x99DD7850
+          _ZN3paf9Framework23CreateTextureFromMemoryEPNS_8graphics7TextureEPNS_6PluginEPvjNS_5Image4TypeEij: 0xF13D2937
           _ZN3paf9Framework23LoadCommonResourceAsyncEPFvvE: 0x3F0DB1BF
           _ZN3paf9Framework23LoadCommonResourceAsyncEPNS0_23CommonResourceInitParamEPFvvE: 0x9E5E0C9C
+          _ZN3paf9Framework24LoadTextureCurrentPluginEPNS_8graphics7TextureEPS0_PNS_8Resource7ElementE: 0x7191797C
           _ZN3paf9Framework25InitializeDefaultJobQueueEv: 0x7C624212
           _ZN3paf9Framework28GetDefaultGraphicsMemoryPoolEv: 0xA0896F7F
           _ZN3paf9Framework9InitParam17LoadDefaultParamsEv: 0x907BA948
@@ -423,6 +560,11 @@ modules:
       ScePafWidget:
         nid: 0x073F8C68
         functions:
+          _ZN3paf6widget10ScrollViewC1EPNS0_6WidgetEi: 0x46DE1318
+          _ZN3paf6widget10ScrollViewC2EPNS0_6WidgetEi: 0xCC28BB62
+          _ZN3paf6widget10ScrollViewD0Ev: 0x1EA76BAE
+          _ZN3paf6widget10ScrollViewD1Ev: 0xE024C815
+          _ZN3paf6widget10ScrollViewD2Ev: 0x3EB61E47
           _ZN3paf6widget11AppIconBaseC1EPNS0_6WidgetEi: 0x2D4FBF97
           _ZN3paf6widget11AppIconBaseC2EPNS0_6WidgetEi: 0xCBB40BFB
           _ZN3paf6widget11ImageButtonC1EPNS0_6WidgetEi: 0x1F8C6717
@@ -484,11 +626,11 @@ modules:
           _ZN3paf6widget16ProgressBarTouchD0Ev: 0xD13E0F08
           _ZN3paf6widget16ProgressBarTouchD1Ev: 0x41ED9224
           _ZN3paf6widget16ProgressBarTouchD2Ev: 0x35FA4988
-          _ZN3paf6widget16ScrollViewParentC1EPNS0_6WidgetEi: 0x46DE1318
-          _ZN3paf6widget16ScrollViewParentC2EPNS0_6WidgetEi: 0xCC28BB62
-          _ZN3paf6widget16ScrollViewParentD0Ev: 0x1EA76BAE
-          _ZN3paf6widget16ScrollViewParentD1Ev: 0xE024C815
-          _ZN3paf6widget16ScrollViewParentD2Ev: 0x3EB61E47
+          _ZN3paf6widget16ScrollViewParentC1EPNS0_6WidgetEi: 0x2F75E51D
+          _ZN3paf6widget16ScrollViewParentC2EPNS0_6WidgetEi: 0xAD03A4B6
+          _ZN3paf6widget16ScrollViewParentD0Ev: 0xF22A1F37
+          _ZN3paf6widget16ScrollViewParentD1Ev: 0x5BC1A611
+          _ZN3paf6widget16ScrollViewParentD2Ev: 0x08C31745
           _ZN3paf6widget3BoxC1EPNS0_6WidgetEi: 0xBE20C3D9
           _ZN3paf6widget3BoxC2EPNS0_6WidgetEi: 0x5CB29873
           _ZN3paf6widget3BoxD0Ev: 0xBA7ACC3E
@@ -499,6 +641,11 @@ modules:
           _ZN3paf6widget4TextD0Ev: 0x8722C2F6
           _ZN3paf6widget4TextD1Ev: 0xD9231C26
           _ZN3paf6widget4TextD2Ev: 0x28251DCB
+          _ZN3paf6widget5PlaneC1EPNS0_6WidgetEi: 0x6B25F540
+          _ZN3paf6widget5PlaneC2EPNS0_6WidgetEi: 0x62C10420
+          _ZN3paf6widget5PlaneD0Ev: 0x3DB1D6ED
+          _ZN3paf6widget5PlaneD1Ev: 0xC2BF23E3
+          _ZN3paf6widget5PlaneD2Ev: 0x0C9CD7BF
           _ZN3paf6widget6Button12SetThresholdEii: 0x16479BA7
           _ZN3paf6widget6ButtonC1EPNS0_6WidgetEi: 0xD00B2806
           _ZN3paf6widget6ButtonC2EPNS0_6WidgetEi: 0x859C45CC
@@ -517,7 +664,6 @@ modules:
           _ZN3paf6widget6Widget11TypeNumSpinEv: 0xE055FBA3
           _ZN3paf6widget6Widget11TypeTextBoxEv: 0xBE985097
           _ZN3paf6widget6Widget12AssignButtonEj: 0x21125870
-          _ZN3paf6widget6Widget12SetDimFactorEfiiiii: 0x543F0959
           _ZN3paf6widget6Widget12TypeCheckBoxEv: 0x8EC2F0BF
           _ZN3paf6widget6Widget12TypeFileListEv: 0x8A33FF2B
           _ZN3paf6widget6Widget12TypeItemSpinEv: 0x9B72616F
@@ -529,11 +675,12 @@ modules:
           _ZN3paf6widget6Widget12TypeSlideBarEv: 0x63E55B87
           _ZN3paf6widget6Widget12TypeSpinBaseEv: 0xDD6D6411
           _ZN3paf6widget6Widget13GetChildByNumEj: 0xB8CA08DA
-          _ZN3paf6widget6Widget13PlayAnimationENS1_9AnimationEPFviPS1_iPvES4_: 0x44B22ACA
+          _ZN3paf6widget6Widget13PlayAnimationEfNS1_9AnimationEPFviPS1_iPvES4_: 0x44B22ACA
           _ZN3paf6widget6Widget13TypeAppIcon2DEv: 0xB102817A
           _ZN3paf6widget6Widget13TypeScrollBarEv: 0xB3878D10
           _ZN3paf6widget6Widget14GetChildByHashEPNS_8Resource7ElementEj: 0x9D304F4A
           _ZN3paf6widget6Widget14SetFilterColorEPKNS1_5ColorEfiiiii: 0x627CDA4E
+          _ZN3paf6widget6Widget14TypeScrollViewEv: 0xC1680F39
           _ZN3paf6widget6Widget15SetTextWithFlag5EPNS_7WStringEi: 0x922FF349
           _ZN3paf6widget6Widget15TypeAppIconBaseEv: 0xCDA6ACBE
           _ZN3paf6widget6Widget15TypeImageButtonEv: 0xBCDBE29A
@@ -547,21 +694,23 @@ modules:
           _ZN3paf6widget6Widget17TypeImageSlidebarEv: 0xBEEE0DCA
           _ZN3paf6widget6Widget17TypeSlidingDrawerEv: 0x167D054C
           _ZN3paf6widget6Widget18TypeScrollBarTouchEv: 0xF64A59EF
+          _ZN3paf6widget6Widget19SetGraphicsDisabledEi: 0x23C283D3
           _ZN3paf6widget6Widget19TypeCompositeButtonEv: 0xE3AFE3D2
           _ZN3paf6widget6Widget19TypeCompositeDrawerEv: 0x8A9DDAE6
-          _ZN3paf6widget6Widget20PlayAnimationReverseENS1_9AnimationEPFviPS1_iPvES4_: 0xF1176ACC
+          _ZN3paf6widget6Widget20PlayAnimationReverseEfNS1_9AnimationEPFviPS1_iPvES4_: 0xF1176ACC
           _ZN3paf6widget6Widget20TypeProgressBarTouchEv: 0xD3057352
           _ZN3paf6widget6Widget20TypeScrollViewParentEv: 0xDA94A4AE
           _ZN3paf6widget6Widget21RegisterEventCallbackEiPNS1_13EventCallbackEi: 0xFB7FE189
+          _ZN3paf6widget6Widget23RegisterFwEventCallbackEfiPNS1_13EventCallbackE: 0x6E3EEF4E
           _ZN3paf6widget6Widget23UnregisterEventCallbackEiii: 0xB98D49AD
-          _ZN3paf6widget6Widget25RegisterLoopEventCallbackEiPNS1_13EventCallbackE: 0x6E3EEF4E
-          _ZN3paf6widget6Widget27UnregisterLoopEventCallbackEi: 0x8F09D12E
+          _ZN3paf6widget6Widget25UnregisterFwEventCallbackEi: 0x8F09D12E
           _ZN3paf6widget6Widget6EnableEi: 0x8F1A3A59
           _ZN3paf6widget6Widget7DisableEi: 0xA1173889
           _ZN3paf6widget6Widget7SetSizeEPK11SceFVector4fiiiii: 0x046AA07D
           _ZN3paf6widget6Widget7SetZoomEPK11SceFVector4fiiiii: 0xEE467CF8
           _ZN3paf6widget6Widget7TypeBoxEv: 0x3A28435A
           _ZN3paf6widget6Widget8GetColorENS1_5Color4TypeEiPS2_: 0xF3281F1C
+          _ZN3paf6widget6Widget8SetAlphaEfiiiii: 0x543F0959
           _ZN3paf6widget6Widget8SetColorENS1_5Color4TypeEiiPKS2_: 0xCD20EF38
           _ZN3paf6widget6Widget8TypeTextEv: 0x45AA2058
           _ZN3paf6widget6Widget9GetParentEv: 0xCFA1EB7A

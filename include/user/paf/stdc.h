@@ -17,6 +17,8 @@ extern "C" {
  * std C functions
  */
 
+int sce_paf_abs(int x);
+int sce_paf_atoi(const char * str);
 void *sce_paf_bzero(void *ptr, SceSize num);
 void *sce_paf_memchr(const void *ptr, int value, SceSize num);
 int sce_paf_memcmp(const void *ptr1, const void *ptr2, SceSize num);
@@ -34,6 +36,12 @@ int sce_paf_strncasecmp(const char *str1, const char *str2, SceSize num);
 int sce_paf_strncmp(const char *str1, const char *str2, SceSize num);
 char *sce_paf_strncpy(char *destination, const char *source, SceSize num);
 char *sce_paf_strrchr(const char *str, int character);
+void sce_paf_qsort(void *ptr, SceSize count, SceSize size, int(*comp)(const void *, const void *));
+
+unsigned long int sce_paf_strtoul(const char* str, char** endptr, int base);
+
+int sce_paf_rand(void);
+void sce_paf_srand(unsigned int seed);
 
 /**
  * wchar functions
@@ -67,6 +75,13 @@ wchar_t *sce_paf_wmemchr(const wchar_t *ptr, wchar_t ch, size_t count);
 int sce_paf_wmemcmp(const wchar_t *lhs, const wchar_t *rhs, size_t count);
 wchar_t *sce_paf_wmemcpy(wchar_t *dest, const wchar_t *src, size_t count);
 wchar_t *sce_paf_wmemmove(wchar_t *dest, const wchar_t *src, size_t count);
+
+void *sce_paf_memalign(size_t align, size_t length);
+void sce_paf_free(void *ptr);
+void *sce_paf_malloc(size_t size);
+
+float sce_paf_ceilf(float arg);
+float sce_paf_floorf(float arg);
 
 #ifdef __cplusplus
 }

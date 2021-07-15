@@ -59,9 +59,11 @@ namespace paf {
 
 	namespace graphics {
 
+		class TextObj;
 		class MemoryPool;
 		class Surface;
 		class Texture;
+		class DrawQueue;
 	}
 
 	namespace datetime {
@@ -102,6 +104,7 @@ namespace paf {
 #include <paf/misc.h>
 #include <paf/resource.h>
 #include <paf/thread.h>
+#include <paf/lowlayer.h>
 
 #endif /* _VDSUITE_USER_PAF_H */
 
